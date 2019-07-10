@@ -1,12 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import {Provider} from 'react-redux'
+import {createStore, applyMiddleware} from 'redux'
+import reducers from './redux/reducers'
+import ContactDetail from '../src/redux/containers/contactDetail';
+import ContactList from '../src/redux/containers/index'
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
+const createStoreWithMiddleware = applyMiddleware()(createStore)
+ReactDOM.render(
+    <Provider store = {createStoreWithMiddleware(reducers)}>
+        <ContactDetail />,<ContactList/>
+    </Provider>, document.getElementById('root'))
+
 serviceWorker.unregister();
